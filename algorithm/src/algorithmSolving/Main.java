@@ -4,44 +4,42 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
-import java.util.StringTokenizer;
+import java.util.Stack;
 
 public class Main {
-	
-	public static void main(String[] args) throws IOException {
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-		int a = Integer.parseInt(st.nextToken());
-		int b = Integer.parseInt(st.nextToken());
-		int c = Integer.parseInt(st.nextToken());
+	public static void main(String[] args) throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int num = Integer.parseInt(br.readLine());
 		
-		while(!(a == 0 || b == 0 || c == 0)) {	
-			int max = Math.max(Math.max(a, b), c);
-			boolean temp = false;
-			
-			if(max == a) {
-				temp = isTriangle(a, b, c);
-			} else if(max == b) {
-				temp = isTriangle(b, a, c);
+		for(int i = 0; i < num; i++) {
+			String str = br.readLine();
+			if(isVPS(str)) {
+				System.out.println("YES");
 			} else {
-				temp = isTriangle(c, b, a);
+				System.out.println("NO");
 			}
-			System.out.println(temp ? "right" : "wrong");
-			
-			st = new StringTokenizer(br.readLine(), " ");
-			a = Integer.parseInt(st.nextToken());
-			b = Integer.parseInt(st.nextToken());
-			c = Integer.parseInt(st.nextToken());
-		} 
-		
+		}	
 	}
 	
-	public static boolean isTriangle(int max, int n1, int n2) {
-		if(Math.pow(max, 2) == Math.pow(n1, 2) + Math.pow(n2, 2)) {
+	public static boolean isVPS(String str) {
+		Stack<Integer> stack = new Stack<Integer>();
+		char[] ch = str.toCharArray();
+		for(int i = 0; i < ch.length; i++) {
+			if(stack.isEmpty() && ch[i] == ')') {
+				return false;
+			} else {
+				if(ch[i] == '(') {
+					stack.push(0);
+				} else {
+					stack.pop();
+				}
+			}
+		}
+		if(stack.isEmpty()) {
 			return true;
-		} 
+		}
 		return false;
 	}
 }
