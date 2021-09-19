@@ -1,62 +1,26 @@
 package algorithmSolving;
 
+import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.IOException;
-
-import java.util.StringTokenizer;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int test = Integer.parseInt(br.readLine());
-		
-		for(int i = 0; i < test; i++) {
-			StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-			int x = Integer.parseInt(st.nextToken());
-			int y = Integer.parseInt(st.nextToken());
-			
-			System.out.println(teleportNum(y - x));
-		}
+		int R = Integer.parseInt(br.readLine());
+		System.out.printf("%.6f\n", uArea(R));
+		System.out.printf("%.6f", tArea(R));
 		
 	}
 	
-	public static int teleportNum(int len) {
-		if(len <= 3) {
-			return len;
-		}
-		
-		int temp = len;
-		
-		int i;
-		int cnt = 0;
-		int sum = 0;
-		for(i = 1; i <= Math.floor(Math.sqrt(len)); i++) {
-			sum += i;
-			temp -= i;
-			cnt++;
-		}
-		i--;
-		
-		while(temp >= sum) {
-			temp -= i;
-			cnt++;
-		}
-		i--;
-		
-		sum = 0;
-		while(i != 0) {
-			sum += i;
-			i--;
-			cnt++;
-		}
-		
-		if(sum != temp) {
-			cnt++;
-		}	
-		return cnt;
+	public static double uArea(int R) {
+		return (double)Math.round(Math.PI * Math.pow(R, 2) * 1000000) / 1000000;
+	}
+	
+	public static double tArea(int R) {
+		return 2 * Math.pow(R, 2);
 	}
 
 }
