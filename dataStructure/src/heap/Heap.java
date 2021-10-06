@@ -44,7 +44,7 @@ public class Heap {
 					return true;
 				}
 			} else {
-				if(heapArray.get(right_child) > heapArray.get(poped_idx)) {
+				if (heapArray.get(right_child) > heapArray.get(poped_idx)) {
 					return true;
 				}
 			}
@@ -100,7 +100,7 @@ public class Heap {
 					Collections.swap(heapArray, right_child_idx, poped_idx);
 					poped_idx = right_child_idx;
 				}
-			}			
+			}
 		}
 		return returned_idx;
 	}
