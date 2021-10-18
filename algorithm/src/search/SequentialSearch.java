@@ -2,7 +2,7 @@ package search;
 
 import java.util.ArrayList;
 
-public class SequencialSearch {
+public class SequentialSearch {
 
 	public static void main(String[] args) {
 		ArrayList<Integer> array = new ArrayList<>();
