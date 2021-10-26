@@ -1,85 +1,74 @@
 package algorithmSolving;
 
-import java.util.ArrayList;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.Collections;
 
 public class Main {
-	static int H;
-	static int W;
+
 	
 	public static void main(String[] args) throws IOException {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-		H = Integer.parseInt(st.nextToken());
-		W = Integer.parseInt(st.nextToken());
-		int N = Integer.parseInt(br.readLine());
-		ArrayList<Nemo> nemo = new ArrayList<>();
+		System.out.print("물건의 갯수 : ");
+		int I = Integer.parseInt(br.readLine());
+		System.out.print("무게 제한 : ");
+		int K = Integer.parseInt(br.readLine());
 		
-		for(int i = 0; i < N; i++) {
+		StringTokenizer st = null;
+		ArrayList<Thing> things = new ArrayList<>();
+		for(int i = 0; i < I; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
-			nemo.add(new Nemo(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
+			things.add(new Thing(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
 		}
-		Collections.sort(nemo);
+		Collections.sort(things);
 		
-		int area = maxArea(nemo);		
-		System.out.println(area);
-		
+		double answer = greedy(things, K);	
+		System.out.println(answer);
 	}
 	
-	public static int maxArea(ArrayList<Nemo> nemo) {
-		for(int i = 0; i < nemo.size() - 1; i++) {
-			Nemo o = nemo.get(i);
-			int x = o.width;
-			int y = o.height;
-			if(checkRange(x, y)) {
-				continue;
-			}
-			for(int j = i + 1; j < nemo.size(); j++) {
-				Nemo n = nemo.get(j);
-				if(checkRange(n.width, n.height)) {
-					continue;
-				}
-				if(((n.width <= W && n.height <= H - y) || (n.width <= W - x && n.height <= H)) || 
-						((n.width <= W && n.height <= H - x) || (n.width <= W - y && n.height <= H))) {
-					return (o.width * o.height) + (n.width * n.height);
-				} else if(((n.height <= W && n.width <= H - y) || (n.height <= W - x && n.width <= H)) || 
-						((n.height <= W && n.width <= H - x) || (n.height <= W - y && n.width <= H))) {
-					return (o.width * o.height) + (n.width * n.height);
-				}
-			}
+	public static double greedy(ArrayList<Thing> things, int limit) {
+		int currentWeight = 0;
+		int currentValue = 0;
+		int i = -1;
+		while(currentWeight < limit) {
+			i++;
+			currentWeight += things.get(i).weight;
+			currentValue += things.get(i).value;
 		}
-		return 0;
-	}
-	
-	public static boolean checkRange(int x, int y) {
-		if((x >= W && y >= W) || (x >= H && y >= H)) {
-			return true;
-		}
-		return false;
+		currentWeight -= things.get(i).weight;
+		currentValue -= things.get(i).value;
+		
+		double plusValue = things.get(i).realValue * (limit - currentWeight);
+		return currentValue + plusValue;
 	}
 	
 }
 
-class Nemo implements Comparable {
-	int width;
-	int height;
+class Thing implements Comparable {
+	int weight;
+	int value;
+	double realValue;
 	
-	public Nemo(int width, int height) {
-		this.width = width;
-		this.height = height;
+	public Thing(int weight, int value) {
+		this.weight = weight;
+		this.value = value;
+		this.realValue = (double)value / weight;
 	}
 	
 	public int compareTo(Object ob) {
-		Nemo n = (Nemo)ob;
-		if(this.width * this.height > n.width * n.height) {
+		Thing t = (Thing)ob;
+		if(this.realValue > t.realValue) {
 			return -1;
 		} else {
 			return 1;
 		}
+	}
+	
+	public String toString() {
+		return this.weight + ", " + this.value;
 	}
 }
