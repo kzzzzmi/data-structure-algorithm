@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Main {
 
@@ -24,10 +25,19 @@ public class Main {
 			st = new StringTokenizer(br.readLine(), " ");
 			things.add(new Thing(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
 		}
-		Collections.sort(things);
+		Collections.sort(things, new Comparator<Thing>() {
+			@Override
+			public int compare(Thing t1, Thing t2) {
+				if(t1.realValue > t2.realValue) {
+					return -1;
+				} else {
+					return 1;
+				}
+			}
+		});
 		
 		double answer = greedy(things, K);	
-		System.out.println(answer);
+		System.out.println((int)(answer * 10 + 0.5) / (double)10);
 	}
 	
 	public static double greedy(ArrayList<Thing> things, int limit) {
@@ -48,7 +58,7 @@ public class Main {
 	
 }
 
-class Thing implements Comparable {
+class Thing {
 	int weight;
 	int value;
 	double realValue;
@@ -57,15 +67,6 @@ class Thing implements Comparable {
 		this.weight = weight;
 		this.value = value;
 		this.realValue = (double)value / weight;
-	}
-	
-	public int compareTo(Object ob) {
-		Thing t = (Thing)ob;
-		if(this.realValue > t.realValue) {
-			return -1;
-		} else {
-			return 1;
-		}
 	}
 	
 	public String toString() {
