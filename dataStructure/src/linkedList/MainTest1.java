@@ -4,21 +4,13 @@ public class MainTest1 {
 
 	public static void main(String[] args) {
 
-		SingleLinkedList1<Integer> myList = new SingleLinkedList1<>();
-		myList.addNode(1);
-		myList.addNode(2);
-		myList.addNode(3);
+		SingleLinkedList<Integer> linkedList = new SingleLinkedList<>();
 		
-		myList.addNode(5, 1);
-		myList.addNode(6, 3);
-		myList.addNode(7, 20);
-		myList.printAll();
+		linkedList.addNode(1);
+		linkedList.addNode(2);
+		linkedList.addNode(3);
 		
-		System.out.println("------------------------------");
-		
-		myList.deleteNode(20);
-		myList.printAll();
-		
+		linkedList.printAll();
 		
 	}
 

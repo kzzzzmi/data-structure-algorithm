@@ -9,7 +9,6 @@ public class QueueTest {
 		queue.enqueue(3);
 		System.out.println(queue.dequeue());
 		System.out.println(queue.dequeue());
-		System.out.println(queue.isEmpty());
-	
+		System.out.println(queue.isEmpty());	
 	}
 }
