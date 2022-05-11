@@ -21,7 +21,51 @@ public class SingleLinkedList<T> {
 				node = node.next;				
 			}
 			node.next = new Node<>(data);
+		} 
+	}
+	
+	public void addNode(T isData, T data) {
+		Node<T> searchNode = searchNode(isData);
+		if(searchNode == null) {
+			addNode(data);
 		}
+		Node<T> nextNode = searchNode.next;
+		searchNode.next = new Node<T>(data);
+		searchNode.next.next = nextNode;
+	}
+	
+	public Node<T> searchNode(T data) {
+		if(head == null) {
+			return null;
+		} else {
+			Node<T> node = this.head;
+			while(node != null) {
+				if(node.data == data) {
+					return node;
+				}
+				node = node.next;
+			}
+			return null;
+		}
+	}
+	
+	public boolean deleteNode(T data) {
+		if(this.head == null) {
+			return false;
+		}
+		if(this.head.data == data) {
+			this.head = this.head.next;
+		}
+		
+		Node<T> node = this.head;
+		while(node.next != null) {
+			if(node.next.data == data) {
+				node.next = node.next.next;
+				return true;
+			}
+			node = node.next;
+		}
+		return false;
 	}
 	
 	public void printAll() {
