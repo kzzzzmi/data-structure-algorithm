@@ -1,14 +1,13 @@
 package linkedList;
 
 public class DoubleLinkedList<T> {
-	
-	public Node<T> head = null;
-	public Node<T> tail = null;
+	private Node<T> head;
+	private Node<T> tail;
 	
 	public class Node<T> {
+		Node<T> prev;
+		Node<T> next;
 		T data;
-		Node<T> prev = null;
-		Node<T> next = null;
 		
 		public Node(T data) {
 			this.data = data;
@@ -20,31 +19,27 @@ public class DoubleLinkedList<T> {
 			this.head = new Node<T>(data);
 			this.tail = this.head;
 		} else {
-			Node<T> node = this.head;
-			while(node.next != null) {
-				node = node.next;
-			}
-			node.next = new Node<T>(data);
-			node.next.prev = node;
-			this.tail = node.next;
+			this.tail.next = new Node<T>(data);
+			this.tail.next.prev = this.tail;
+			this.tail = this.tail.next;
 		}
 	}
 	
 	public void printAll() {
-		if(this.head != null) {
-			Node<T> node = this.head;
+		Node<T> node = this.head;
+		while(node != null) {
 			System.out.println(node.data);
-			while(node.next != null) {
-				node = node.next;
-				System.out.println(node.data);
-			}
+			node = node.next;
 		}
 	}
 	
-	public T searchFromHead(T isData) {
+	public T searchFromHead(T data) {
+		if(this.head == null) {
+			return null;
+		}
 		Node<T> node = this.head;
 		while(node != null) {
-			if(node.data == isData) {
+			if(node.data == data) {
 				return node.data;
 			}
 			node = node.next;
@@ -52,10 +47,13 @@ public class DoubleLinkedList<T> {
 		return null;
 	}
 	
-	public T searchFromTail(T isData) {
+	public T searchFromTail(T data) {
+		if(this.head == null) {
+			return null;
+		}
 		Node<T> node = this.tail;
 		while(node != null) {
-			if(node.data == isData) {
+			if(node.data == data) {
 				return node.data;
 			}
 			node = node.prev;
@@ -63,54 +61,27 @@ public class DoubleLinkedList<T> {
 		return null;
 	}
 	
-	public boolean insertToBack(T existedData, T addData) {
+	public boolean insertToFront(T isData, T data) {
 		if(this.head == null) {
-			this.head = new Node<T>(addData);
+			this.head = new Node<T>(data);
 			this.tail = this.head;
 			return true;
-		} else if(this.tail.data == existedData) {
-			this.tail.next = new Node<T>(addData);
-			this.tail.next.prev = this.tail;
-			this.tail = this.tail.next;
+		}
+		if(this.head.data == isData) {
+			Node<T> node = new Node<T>(data);
+			node.next = this.head;
+			this.head.prev = node;
+			this.head = node;
 			return true;
 		}
-		Node<T> node = this.head;
+		Node<T> node = this.head.next;
 		while(node != null) {
-			if(node.data == existedData) {
-				node.next.prev = new Node<T>(addData);
-				node.next.prev.next = node.next;
-				node.next = node.next.prev;
-				node.next.prev = node;
-				return true;
-			}
-			node = node.next;
-		}
-		this.tail.next = new Node<T>(addData);
-		this.tail.next.prev = this.tail;
-		this.tail = this.tail.next;
-		return true;
-	}
-	
-	public boolean insertToFront(T existedData, T addData) {
-		if(this.head == null) {
-			this.head = new Node<T>(addData);
-			this.tail = this.head;
-			return true;
-		} else if(this.head.data == existedData) {
-			Node<T> newHead = new Node<T>(addData);
-			newHead.next = this.head;
-			this.head.prev = newHead;
-			this.head = newHead;
-			return true;
-		}
-		Node<T> node = this.head;
-		while(node != null) {
-			if(node.data == existedData) {
-				Node<T> nodePrve = node.prev;
-				nodePrve.next = new Node<T>(addData);
-				nodePrve.next.prev = nodePrve.next;
-				nodePrve = nodePrve.next;
-				nodePrve.next = node;
+			if(node.data == isData) {
+				Node<T> prev = node.prev;
+				prev.next = new Node<T>(data);
+				prev.next.next = node;
+				node.prev = prev.next;
+				prev.next.prev = prev;
 				return true;
 			}
 			node = node.next;
