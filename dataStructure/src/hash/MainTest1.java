@@ -4,13 +4,11 @@ public class MainTest1 {
 
 	public static void main(String[] args) {
 
-		HashLinear mainObject = new HashLinear(20);
-		mainObject.saveData("DaveLee", "01022223333");
-		mainObject.saveData("fun-coding", "01033334444");
-		mainObject.saveData("David", "01044445555");
-		mainObject.saveData("Dave", "01055556666");
-		System.out.println(mainObject.getData("DaveLee"));
-		
+		Hash<String> myHash = new Hash<>(20);
+		myHash.saveData("DaveLee1", "010123456789");
+		myHash.saveData("DaveLee1", "555");
+		myHash.saveData("funcoding", "9876543210");
+		System.out.println(myHash.getData("DaveLee1"));
 	}
 
 }
