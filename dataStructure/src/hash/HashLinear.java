@@ -29,32 +29,49 @@ public class HashLinear {
 	}
 
 	public boolean saveData(String key, String value) {
-		int address = this.hashFunc(key);
-
-		while (this.hashTable[address] != null) {
-			if (this.hashTable[address].key == key) {
-				this.hashTable[address].value = value;
+		int address = hashFunc(key);
+		if(hashTable[address] != null) {
+			if(hashTable[address].key == key) {
+				hashTable[address].value = value;
 				return true;
 			} else {
-				address++;
-				if (address >= this.hashTable.length) {
-					return false;
+				int currAddress = address + 1;
+				while(hashTable[currAddress] != null) {
+					if(hashTable[currAddress].key == key) {
+						hashTable[currAddress].value = value;
+						return true;
+					} else {
+						if(currAddress >= hashTable.length) {
+							return false;
+						}
+						currAddress++;
+					}
 				}
+				hashTable[currAddress] = new Slot(key, value);
+				return true;
 			}
+		} else {
+			hashTable[address] = new Slot(key, value);
+			return true;
 		}
-		this.hashTable[address] = new Slot(key, value);
-		return true;
 	}
 
 	public String getData(String key) {
-		int address = this.hashFunc(key);
-		while (this.hashTable[address] != null) {
-			if (this.hashTable[address].key == key) {
-				return this.hashTable[address].value;
+		int address = hashFunc(key);
+		if(hashTable[address] != null) {
+			if(hashTable[address].key == key) {
+				return hashTable[address].value;
 			} else {
-				address++;
-				if (address >= this.hashTable.length) {
-					return null;
+				int currAddress = address + 1;
+				while(hashTable[currAddress] != null) {
+					if(hashTable[currAddress].key == key) {
+						return hashTable[currAddress].value;
+					} else {
+						if(hashTable.length <= currAddress) {
+							return null;
+						}
+						currAddress++;
+					}
 				}
 			}
 		}
