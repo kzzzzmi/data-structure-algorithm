@@ -9,6 +9,7 @@ public class MainTest1 {
 		myHash.saveData("DaveLee1", "555");
 		myHash.saveData("funcoding", "9876543210");
 		System.out.println(myHash.getData("DaveLee1"));
+
 	}
 
 }
