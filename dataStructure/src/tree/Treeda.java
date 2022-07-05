@@ -97,7 +97,7 @@ public class Treeda {
 							} else {
 								changeParentNode = changeNode;
 								changeNode = changeNode.left;
-							}
+							} 
 						}
 					} else {
 						
