@@ -23,6 +23,32 @@ public class MySort {
 		return array;
 	}
 	
+	public ArrayList<Integer> insertionSort(ArrayList<Integer> array) {
+		for(int i = 1; i < array.size(); i++) {
+			int index = i;
+			while(index >= 1 && array.get(index) < array.get(index - 1)) {
+				Collections.swap(array, index, index - 1);
+				index--;
+			}
+		}
+		return array;
+	}
+	
+	public ArrayList<Integer> selectionSort(ArrayList<Integer> array) {
+		for(int i = 0; i < array.size() - 1; i++) {
+			int minIdx = i;
+			for(int j = i + 1; j < array.size(); j++) {
+				if(array.get(j) < array.get(minIdx)) {
+					minIdx = j;
+				}
+			}
+			if(minIdx != i) {
+				Collections.swap(array, i, minIdx);
+			}
+		}
+		return array;
+	}
+	
 	public static void main(String[] args) {
 		MySort sort = new MySort();
 		
