@@ -1,6 +1,7 @@
 package sort;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class MySort {
@@ -86,18 +87,42 @@ public class MySort {
 		
 		return mergeArr;
 	}
+	
+	public static ArrayList<Integer> quickSort(ArrayList<Integer> array) {
+		if(array.size() <= 1) {
+			return array;
+		}
+		
+		ArrayList<Integer> leftArr = new ArrayList<Integer>();
+		ArrayList<Integer> rightArr = new ArrayList<Integer>();
+		int pivot = array.get(0);
+		
+		for(int i = 1; i < array.size(); i++) {
+			if(array.get(i) < pivot) {
+				leftArr.add(array.get(i));
+			} else {
+				rightArr.add(array.get(i));
+			}
+		}
+		
+		leftArr = quickSort(leftArr);
+		rightArr = quickSort(rightArr);
+		
+		ArrayList<Integer> mergedArr = new ArrayList<Integer>();
+		mergedArr.addAll(leftArr);
+		mergedArr.add(pivot);
+		mergedArr.addAll(rightArr);
+		
+		return mergedArr;
+	}
 
 	public static void main(String[] args) {
-		ArrayList<Integer> arr = new ArrayList<Integer>();
+		ArrayList<Integer> array = new ArrayList<Integer>();
 		for(int i = 0; i < 100; i++) {
-			arr.add((int)(Math.random() * 100 + 1));
+			array.add((int)(Math.random() * 100));
 		}
-		
-		arr = splitArray(arr);
-		
-		for(int i : arr) {
-			System.out.print(i + " ");
-		}
+		array = quickSort(array);
+		System.out.println(array);
 	}
 
 }
