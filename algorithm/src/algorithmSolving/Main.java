@@ -3,39 +3,52 @@ package algorithmSolving;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.StringTokenizer;
+import java.util.ArrayList;
+
 
 public class Main {
-
+	
+	static ArrayList<String> cases = new ArrayList<>();
+	static String answer;
+	
 	public static void main(String[] args) throws IOException {
 
+		boolean flag = true;
+		int gameCount = 0;
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(br.readLine());
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int[][] arr = new int[2][n];
-		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+		answer = br.readLine();
+		initCase();
 		
-		for(int i = 0; i < n; i++) {
-			arr[0][i] = Integer.parseInt(st.nextToken());
-			arr[1][i] = arr[0][i];
+		while(flag) {
+			
 		}
-		
-		Arrays.sort(arr[0]);
-		
-		int rank = 0;
-		for(int i : arr[0]) {
-			if(!map.containsKey(i)) {
-				map.put(i, rank++);
+
+	}
+	
+	public static void initCase() {
+		int num = 123;		
+		while(num < 988) {
+			if(!overlapCheck(num)) {
+				cases.add(Integer.toString(num));
 			}
+			num++;
 		}
+	}
+	
+	public static boolean overlapCheck(int num) {
+		int[] temp = new int[3];
+		temp[0] = num / 100;
+		temp[1] = num / 10 % 10;
+		temp[2] = num % 10;
 		
-		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i < n; i++) {
-			sb.append(map.get(arr[1][i])).append(" ");
+		if(temp[0] == temp[1] || temp[0] == temp[2] || temp[1] == temp[2]) {
+			return true;
 		}
-		System.out.println(sb);
+		if(temp[0] == 0 || temp[1] == 0 || temp[2] == 0) {
+			return true;
+		}
+		return false;
 	}
 
 }
