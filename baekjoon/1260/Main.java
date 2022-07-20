@@ -1,3 +1,9 @@
+// data : 2202-07-20
+// link : https://www.acmicpc.net/source/46366875
+/*
+  BFS와 DFS
+*/
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
