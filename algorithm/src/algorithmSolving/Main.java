@@ -5,7 +5,6 @@
  *  - cases의 요소들과 choice를 비교했서 얻은 compStrike와 compBall 값과 위의 strike와 ball이 일치하지 않으면 answer이 될 수 없는 조건을 찾음
  *  - 위의 조건을 이용하여 완전 탐색을 해서 매 입력마다 cases의 요소를 지움
  */
-
 package algorithmSolving;
 
 import java.io.BufferedReader;
@@ -23,45 +22,52 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int allGameCount = 0;
-		int count = 0;
 
-		while (count < 1) {
-			while (true) {
-				System.out.print("1 ~ 9 까지 중복되지 않는 세자리 수를 입력해주세요 : ");
-				answer = br.readLine();
-				if (validation(Integer.parseInt(answer))) {
-					break;
-				}
-				System.out.println();
+		int gameCount = 0;
+
+		while (true) {
+			System.out.print("1 ~ 9 까지 중복되지 않는 세자리 수를 입력해주세요 : ");
+			answer = br.readLine();
+			if (validation(Integer.parseInt(answer))) {
+				break;
 			}
-//			answer = randomInput();
-			initCase();
-
-			while (true) {
-				int random = (int) (Math.random() * cases.size());
-				String choice = cases.remove(random);
-				System.out.println("Bot : " + choice);
-				getStrikeBall(choice);
-				System.out.println("Strike : " + strike + ", Ball : " + ball);
-				System.out.println();
-				allGameCount++;
-
-				if (strike == 3 || cases.size() <= 1) {
-					break;
-				}
-
-				for (int index = 0; index < cases.size(); index++) {
-					removeElements(choice, index);
-				}
-			}
-			count++;
+			System.out.println();
 		}
-		System.out.println(count + "번 실행 결과 정답을 찾는데 걸린 횟수 평균 : " + allGameCount / count);
+		initCase();
+
+		while (true) {
+			int random = (int) (Math.random() * cases.size());
+			String choice = cases.remove(random);
+			System.out.println("Bot : " + choice);
+			getStrikeBall(choice);
+			System.out.println("Strike : " + strike + ", Ball : " + ball);
+			System.out.println();
+			gameCount++;
+
+			if (strike == 3 || cases.size() <= 1) {
+				break;
+			}
+
+			for (int index = 0; index < cases.size(); index++) {
+				index = removeElements(choice, index);
+			}
+		}
+
+		System.out.println("정답을 찾는데 걸린 횟수 : " + gameCount);
+	}
+
+	// 평균 몇번에 맞추는지 테스트 위해서 랜덤 값을 입력으로 넣는 함수
+	public static String randomInput() {
+		while (true) {
+			int temp = (int) (Math.random() * 987 + 1);
+			if (validation(temp)) {
+				return Integer.toString(temp);
+			}
+		}
 	}
 
 	// strike, ball 그리고 compStrike, compBall 을 비교하여 같지 않는 요소 제거
-	public static void removeElements(String choice, int index) {
+	public static int removeElements(String choice, int index) {
 		int compStrike = 0;
 		int compBall = 0;
 
@@ -82,17 +88,9 @@ public class Main {
 
 		if (!(strike == compStrike && ball == compBall)) {
 			cases.remove(index);
+			index--;
 		}
-	}
-
-	// 평균 몇번에 맞추는지 테스트 위해서 랜덤 값을 입력으로 넣는 함수
-	public static String randomInput() {
-		while (true) {
-			int temp = (int) (Math.random() * 987 + 1);
-			if (validation(temp)) {
-				return Integer.toString(temp);
-			}
-		}
+		return index;
 	}
 
 	// 프로그램이 랜덤으로 입력한 값과 answer을 비교해서 strike와 ball 값을 변경하는 함수
