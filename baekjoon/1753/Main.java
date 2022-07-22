@@ -1,5 +1,7 @@
+// data : 2202-07-22
+// link : https://www.acmicpc.net/source/46491178
 /*
-
+  Dijkstra 
 */
 
 import java.io.BufferedReader;
