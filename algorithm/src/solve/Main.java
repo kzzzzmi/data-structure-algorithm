@@ -5,7 +5,7 @@
  *  - cases의 요소들과 choice를 비교했서 얻은 compStrike와 compBall 값과 위의 strike와 ball이 일치하지 않으면 answer이 될 수 없는 조건을 찾음
  *  - 위의 조건을 이용하여 완전 탐색을 해서 매 입력마다 cases의 요소를 지움
  */
-package algorithmSolving;
+package solve;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,22 +22,24 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+		initCase();
 		int gameCount = 0;
 
+		// 정답 입력 (유효성 체크o)
 		while (true) {
 			System.out.print("1 ~ 9 까지 중복되지 않는 세자리 수를 입력해주세요 : ");
 			answer = br.readLine();
 			if (validation(Integer.parseInt(answer))) {
+				System.out.println();
 				break;
 			}
-			System.out.println();
+			System.out.println("유효하지 않은 숫자입니다. 다시 입력해주세요.\n");
 		}
-		initCase();
 
 		while (true) {
 			int random = (int) (Math.random() * cases.size());
 			String choice = cases.remove(random);
+			System.out.println("---------" + (gameCount + 1) + "회차---------");
 			System.out.println("Bot : " + choice);
 			getStrikeBall(choice);
 			System.out.println("Strike : " + strike + ", Ball : " + ball);
@@ -81,6 +83,7 @@ public class Main {
 				for (int k = 0; k < 3; k++) {
 					if (choiceAlphabet == caseWord.charAt(k)) {
 						compBall++;
+						break;
 					}
 				}
 			}
@@ -104,6 +107,7 @@ public class Main {
 				for (int j = 0; j < 3; j++) {
 					if (answer.charAt(i) == choice.charAt(j)) {
 						ball++;
+						break;
 					}
 				}
 			}

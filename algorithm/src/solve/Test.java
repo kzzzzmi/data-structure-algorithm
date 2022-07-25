@@ -1,4 +1,4 @@
-package algorithmSolving;
+package solve;
 
 import java.util.Scanner;
 
