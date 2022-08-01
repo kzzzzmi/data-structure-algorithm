@@ -1,3 +1,10 @@
+// data : 2202-08-01
+// link : https://www.acmicpc.net/source/47010118
+/*
+  Brute-force
+*/
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
