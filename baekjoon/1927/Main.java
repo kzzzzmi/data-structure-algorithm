@@ -1,3 +1,9 @@
+// data : 2202-08-02
+// link : https://www.acmicpc.net/source/47078652
+/*
+  priority queue를 이용한 최소힙 구현
+*/
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
