@@ -1,26 +1,40 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Main {
-	
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
-		int[] num = new int[26];
-		int size = Integer.parseInt(br.readLine());
-		char[] str = br.readLine().toCharArray();
 
-		int max = 0;
-		char maxChar = 'a';
-		for(int i = 0; i < size; i++) {
-			int temp = ++num[str[i] - 'a'];
-			if(max < temp) {
-				max = temp;
-				maxChar = str[i];
+	public static void main(String[] args) throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
+
+		ArrayList<Integer> array = new ArrayList<Integer>(N);
+		int num;
+
+		for (int i = 0; i < N; i++) {
+			num = Integer.parseInt(br.readLine());
+			int index = Collections.binarySearch(array, num);
+			int findIndex = -(index + 1);
+
+			if (index < 0) {
+				array.add(findIndex, num);
+			} else {
+				array.add(index, num);
+			}
+
+			int size = array.size();
+
+			if (size % 2 == 0) {
+				sb.append(array.get(size / 2 - 1)).append('\n');
+			} else {
+				sb.append(array.get(size / 2)).append('\n');
 			}
 		}
-		
-		System.out.println(sb.append(maxChar).append(' ').append(max));
+
+		System.out.println(sb);
 	}
 }
