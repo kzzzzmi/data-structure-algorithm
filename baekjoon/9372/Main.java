@@ -1,3 +1,11 @@
+// data : 2202-08-02
+// link : https://www.acmicpc.net/source/47059395
+/*
+  크루스칼 알고리즘을 통해 최소 
+  가중치가 따로 주어지지 않아서 모두 같은 가중치라고 생각하고
+  가중치를 기준으로 따로 정렬하지 
+*/
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
