@@ -1,3 +1,9 @@
+// data : 2202-08-03
+// link : https://www.acmicpc.net/source/47138441
+/*
+  브루트포스 알고리즘에 대한 
+*/
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
