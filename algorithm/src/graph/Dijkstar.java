@@ -8,27 +8,28 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-class Edge implements Comparable<Edge>{
-	String vertex;
-	int distance;
-	
-	public Edge(String vertex, int distance) {
-		this.vertex = vertex;
-		this.distance = distance;
-	}
-	
-	@Override
-	public String toString() {
-		return vertex + "까지 가중치" + distance;
-	}
-
-	@Override
-	public int compareTo(Edge o) {
-		return this.distance - o.distance;
-	}
-}
 
 public class Dijkstar {
+	
+	static class Edge implements Comparable<Edge>{
+		String vertex;
+		int distance;
+		
+		public Edge(String vertex, int distance) {
+			this.vertex = vertex;
+			this.distance = distance;
+		}
+		
+		@Override
+		public String toString() {
+			return vertex + "까지 가중치" + distance;
+		}
+
+		@Override
+		public int compareTo(Edge o) {
+			return this.distance - o.distance;
+		}
+	}
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		

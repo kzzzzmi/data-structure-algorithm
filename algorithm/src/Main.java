@@ -1,40 +1,66 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.StringTokenizer;
 
 public class Main {
+
+	static StringBuilder sb = new StringBuilder();
+	static int[][][] dp = new int[21][21][21];
 
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int N = Integer.parseInt(br.readLine());
-		StringBuilder sb = new StringBuilder();
+		StringTokenizer st;
+		dpFunc();
 
-		ArrayList<Integer> array = new ArrayList<Integer>(N);
-		int num;
-
-		for (int i = 0; i < N; i++) {
-			num = Integer.parseInt(br.readLine());
-			int index = Collections.binarySearch(array, num);
-			int findIndex = -(index + 1);
-
-			if (index < 0) {
-				array.add(findIndex, num);
+		while (true) {
+			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			int c = Integer.parseInt(st.nextToken());
+			if(a == -1 && b == -1 && c == -1) {
+				break;
+			}
+			
+			String notation = "w(" + a + ", " + b + ", " + c + ") = ";
+			if (a <= 0 || b <= 0 || c <= 0) {
+				sb.append(notation + 1).append('\n');
+			} else if (a > 20 || b > 20 || c > 20) {
+				sb.append(notation + dp[20][20][20]).append('\n');
 			} else {
-				array.add(index, num);
+				sb.append(notation + dp[a][b][c]).append('\n');
 			}
 
-			int size = array.size();
-
-			if (size % 2 == 0) {
-				sb.append(array.get(size / 2 - 1)).append('\n');
-			} else {
-				sb.append(array.get(size / 2)).append('\n');
-			}
 		}
-
 		System.out.println(sb);
 	}
+
+	public static void dpFunc() {
+		initDp();
+
+		for (int i = 1; i <= 20; i++) {
+			for (int j = 1; j <= 20; j++) {
+				for (int k = 1; k <= 20; k++) {
+					if (i < j && j < k) {
+						dp[i][j][k] = dp[i][j][k - 1] + dp[i][j - 1][k - 1] - dp[i][j - 1][k];
+					} else {
+						dp[i][j][k] = dp[i - 1][j][k] + dp[i - 1][j - 1][k] + dp[i - 1][j][k - 1]
+								- dp[i - 1][j - 1][k - 1];
+					}
+				}
+			}
+		}
+	}
+	
+	public static void initDp() {
+		for(int i = 0; i < 21; i++) {
+			for(int j = 0; j < 21; j++) {
+				dp[0][i][j] = 1;
+				dp[i][0][j] = 1;
+				dp[i][j][0] = 1;
+			}
+		}
+	}
+
 }
