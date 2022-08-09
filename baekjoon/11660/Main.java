@@ -1,4 +1,4 @@
-// data : 2202-08-03
+// data : 2202-08-09
 // link : https://www.acmicpc.net/source/47454227
 /*
   누적합을 활용한 문제해결
