@@ -1,7 +1,7 @@
 // data : 2202-08-09
 // link : https://www.acmicpc.net/source/47450361
 /*
-  누적합 구현
+  누적합 활용 문제해결
 */
 
 import java.io.BufferedReader;
