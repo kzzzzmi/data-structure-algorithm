@@ -3,7 +3,7 @@
 /*
   priority queue를 이용한 문제해결
    - 생각해내기 힘듦
-   - 끝나고 다른 사람들 풀이를 보니 stack으로 풀었는데 wow 저게 정석인듯
+   - 끝나고 다른 사람들 풀이를 보니 stack으로 풀었는데 저게 정석인듯
 */
 
 import java.io.BufferedReader;
