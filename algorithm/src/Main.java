@@ -1,72 +1,171 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.PriorityQueue;
-
 public class Main {
-	
-	static HashSet<Integer> checkNum = new HashSet<Integer>();
 
-	public static void main(String[] args) throws IOException {
+	Node head;
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
-		int N = Integer.parseInt(br.readLine());
-						
-		PriorityQueue<Integer> measures = new PriorityQueue<Integer>();
-		int[] arr = new int[N];
-		int minNum = Integer.MAX_VALUE;
-		int value;
-		
-		for(int i = 0; i < N; i++) {
-			arr[i] = Integer.parseInt(br.readLine());
-			if(arr[i] < minNum) {
-				minNum = arr[i];
-			}
+	public class Node {
+		Node left;
+		Node right;
+		int data;
+
+		public Node(int data) {
+			this.data = data;
 		}
-		
-		measures = getMeasure(minNum);
-		measures.remove(1);
-		
-		while(!measures.isEmpty()) {
-			value = measures.poll();
-			checkNum.add(value);
-			
-			boolean equalCheck = true;
-			int standardRes = arr[0] % value;
-			for(int i = 1; i < arr.length; i++) {
-				int temp = arr[i] % value;
-				if(temp != standardRes) {
-					equalCheck = false;
-				}
-				if(!measures.contains(temp) && !checkNum.contains(temp) && temp != 0) {
-					measures.add(temp);
-				}
-			}
-			
-			if(equalCheck) {
-				sb.append(value).append(' ');
-			}
+
+		@Override
+		public String toString() {
+			return this.data + "";
 		}
-		System.out.println(sb);
-		
 	}
-	
-	public static PriorityQueue<Integer> getMeasure(int minNum) {
-		PriorityQueue<Integer> measures = new PriorityQueue<Integer>();
-		int sqrt = (int)Math.sqrt(minNum);
-		
-		for(int i = 1; i <= sqrt; i++) {
-			if(minNum % i == 0) {
-				measures.add(i);
-				measures.add(minNum / i);
-				checkNum.add(i);
-				checkNum.add(minNum / i);
+
+	public Integer deleteData(int data) {
+		if (this.head == null) {
+			return null;
+		} else if(head.data == data && head.left == null && head.right == null) {
+			this.head = null;
+			return data;
+		}
+
+		Node node = this.head;
+		Node parentNode = this.head;
+		boolean isSearched = false;
+
+		while (node != null) {
+			if (data == node.data) {
+				isSearched = true;
+				break;
+			} else if (data < node.data) {
+				parentNode = node;
+				node = node.left;
+			} else {
+				parentNode = node;
+				node = node.right;
 			}
 		}
-		return measures;
+
+		if (!isSearched) {
+			return null;
+		}
+
+		if (node.left == null && node.right == null) {
+			if (data < parentNode.data) {
+				parentNode.left = null;
+				return data;
+			} else {
+				parentNode.right = null;
+				return data;
+			}
+		} else if (node.left != null && node.right != null) {
+			Node searchParentNode = node;
+			Node searchNode = node.right;
+			
+			if(searchNode.left == null) {
+				searchParentNode.right = null;
+			} else {
+				while(searchNode.left != null) {
+					searchParentNode = searchNode;
+					searchNode = searchNode.left;
+				}
+			}
+			
+			if(searchNode.right != null) {
+				searchParentNode.left = searchNode.right;
+			} else {
+				searchParentNode.left = null;
+			}
+			
+			searchNode.left = node.left;
+			searchNode.right = node.right;
+			
+			if(data < parentNode.data) {
+				parentNode.left = searchNode;
+			} else if(data > parentNode.data){
+				parentNode.right = searchNode;
+			} else {
+				this.head = searchNode;
+			}
+		} else {
+			if(node.right == null) {
+				if(data < parentNode.data) {
+					parentNode.left = node.left;
+					node = null;
+				} else if(data > parentNode.data){
+					parentNode.right = node.left;
+					node = null;
+				} else {
+					this.head = node.left;
+				}
+			} else {
+				if(data < parentNode.data) {
+					parentNode.left = node.right;
+					node = null;
+				} else if(data > parentNode.data) {
+					parentNode.right = node.right;
+					node = null;
+				} else {
+					this.head = node.right;
+				}
+			}
+		}
+		return data;
+	}
+
+	public boolean searchData(int data) {
+		if (this.head == null) {
+			return false;
+		}
+
+		Node node = this.head;
+
+		while (node != null) {
+			if (data == node.data) {
+				return true;
+			} else if (data < node.data) {
+				node = node.left;
+			} else {
+				node = node.right;
+			}
+		}
+		return false;
+	}
+
+	public void addData(int data) {
+		if (head == null) {
+			head = new Node(data);
+			return;
+		}
+
+		Node node = head;
+		Node parentNode = head;
+
+		while (node != null) {
+			if (data < node.data) {
+				parentNode = node;
+				node = node.left;
+			} else {
+				parentNode = node;
+				node = node.right;
+			}
+		}
+
+		if (data < parentNode.data) {
+			parentNode.left = new Node(data);
+		} else {
+			parentNode.right = new Node(data);
+		}
+	}
+
+	public static void main(String[] args) {
+		Main bst = new Main();
+		bst.addData(10);
+		bst.addData(8);
+
+		System.out.println(bst.head);
+		System.out.println(bst.head.left);
 		
+		System.out.println(bst.deleteData(10));
+		System.out.println();
+		
+		System.out.println(bst.head);
 	}
 
 }
