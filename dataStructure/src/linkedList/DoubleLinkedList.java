@@ -90,16 +90,3 @@ public class DoubleLinkedList<T> {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
