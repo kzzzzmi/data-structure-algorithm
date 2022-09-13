@@ -1,3 +1,5 @@
+package java2;
+
 import java.io.IOException;
 
 class Main {
