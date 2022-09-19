@@ -1,48 +1,75 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 class Main {
 
+	static int[] mergedArr;
+	static int count;
+
 	public static void main(String[] args) throws IOException {
 
-		int[] A = new int[15];
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+		int N = Integer.parseInt(br.readLine());
 
-		for (int i = 0; i < A.length; i++) {
-			A[i] = (int) (Math.random() * 100);
+		int[] A = new int[N];
+
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < N; i++) {
+			A[i] = Integer.parseInt(st.nextToken());
 		}
 
-		quick_sort(A, 0, A.length - 1);
+		mergeSort(A);
 
-		for (int i = 0; i < A.length; i++) {
-			System.out.println(A[i]);
-		}
+		System.out.println(count);
+
 	}
 
-	public static void quick_sort(int[] A, int start, int end) {
-		if (start >= end) {
+	public static void mergeSort(int[] array) {
+		mergedArr = new int[array.length];
+		mergeSort(array, 0, array.length - 1);
+		mergedArr = null;
+	}
+
+	public static void mergeSort(int[] array, int left, int right) {
+		if (left >= right) {
 			return;
 		}
 
-		int startIndex = start;
-		int endIndex = end;
-		int pivot = A[startIndex];
-		int temp;
+		int mid = (left + right) / 2;
 
-		while (startIndex < endIndex) {
-			while (startIndex < endIndex && A[startIndex] <= pivot) {
-				startIndex++;
+		mergeSort(array, left, mid);
+		mergeSort(array, mid + 1, right);
+
+		merge_conquer(array, left, mid, right);
+	}
+
+	public static void merge_conquer(int[] array, int left, int mid, int right) {
+		int lo = left;
+		int hi = mid + 1;
+		int index = left;
+
+		while (lo <= mid && hi <= right) {
+			if (array[lo] <= array[hi]) {
+				mergedArr[index++] = array[lo++];
+			} else {
+				count += hi - index;
+				mergedArr[index++] = array[hi++];
 			}
-			while (startIndex < endIndex && A[endIndex] > pivot) {
-				endIndex--;
-			}
-			temp = A[startIndex];
-			A[startIndex] = A[endIndex];
-			A[endIndex] = temp;
 		}
 
-		A[start] = A[startIndex];
-		A[startIndex] = pivot;
+		while (lo <= mid) {
+			mergedArr[index++] = array[lo++];
+		}
+		while (hi <= right) {
+			mergedArr[index++] = array[hi++];
+		}
 
-		quick_sort(A, start, startIndex - 1);
-		quick_sort(A, startIndex + 1, end);
+		for (int i = left; i <= right; i++) {
+			array[i] = mergedArr[i];
+		}
 	}
+
 }
